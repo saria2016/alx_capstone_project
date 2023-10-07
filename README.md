@@ -1,13 +1,13 @@
 # Task Manager Application
 ALX Capstone Project
-# Friendly Gadget
+# Task Manager App
 ![GitHub repo size](https://github.com/saria2016/alx_capstone_project)
 ![GitHub issues](https://img.shields.io/github/issues/saria2016/alx_capstone_project)
 ![GitHub Repo stars](https://img.shields.io/github/stars/saria2016/alx_capstone_project?logo=github&style=flat)
 ![GitHub forks](https://img.shields.io/github/forks/saria2016/alx_capstone_project?logo=github&style=falt)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/saria2016/alx_capstone_project?logo=github)
 
-![banner](../static/assets/img/task.png)
+![banner](../static/css/img/task.png)
 
 ## Overview
 
