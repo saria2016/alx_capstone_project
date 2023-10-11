@@ -75,8 +75,6 @@ the root of the project.
 
 ## Authors
 
-The [AUTHORS](https://github.com/saria2016/alx_capstone_project/blob/main/AUTHORS)
-
 <details>
     <summary>Saria Mohammed</summary>
     <ul>
