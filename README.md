@@ -7,7 +7,7 @@ ALX Capstone Project
 ![GitHub forks](https://img.shields.io/github/forks/saria2016/alx_capstone_project?logo=github&style=falt)
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/saria2016/alx_capstone_project?logo=github)
 
-![banner](./static/css/img/task.png)
+![banner](./static/img/task.png)
 
 ## Overview
 
