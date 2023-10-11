@@ -1,7 +1,7 @@
 # Task Manager Application
 ALX Capstone Project
 # Task Manager App
-![GitHub repo size](https://github.com/saria2016/alx_capstone_project)
+![GitHub repo size](https://img.shields.io/github/repo-size/saria2016/alx_capstone_project)
 ![GitHub issues](https://img.shields.io/github/issues/saria2016/alx_capstone_project)
 ![GitHub Repo stars](https://img.shields.io/github/stars/saria2016/alx_capstone_project?logo=github&style=flat)
 ![GitHub forks](https://img.shields.io/github/forks/saria2016/alx_capstone_project?logo=github&style=falt)
