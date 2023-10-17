@@ -38,7 +38,7 @@ The Task Manager APP includes the following key features:
 # Installation
 ## Dependencies
 - This application is written in Python and requires Python 3.11.4 or 3.11.6 to run correctly.
-- Use Requirement.txt to install all dependancy library
+- Use Requirement.txt to install all dependancy library by add this command :( pip install -r requirements.txt)
 
 ## Getting Started
 
