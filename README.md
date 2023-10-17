@@ -26,7 +26,7 @@ RESTful API
 Relational Database
 * MySql Handled with ORM (SQLAlchemy)
 * Model system with base model handling identification
-* Many to many relationships for users and rewards
+* Many to many relationships
 
 ## Features
 
@@ -37,7 +37,8 @@ The Task Manager APP includes the following key features:
 
 # Installation
 ## Dependencies
-This application is written in Python and requires Python 3.8 or later to run correctly.
+- This application is written in Python and requires Python 3.11.4 or 3.11.6 to run correctly.
+- Use Requirement.txt to install all dependancy library
 
 ## Getting Started
 
@@ -62,10 +63,12 @@ the root of the project.
 
 2. **Login to your task page:**
    - You will be great when you create account automatically redirection to login page
-   - Fill the Login form and Click on “Login” and you will be directed to the tasks page 
+   - Fill the Login form and Click on “Login” and you will be directed to the tasks page
+   - update profile by Click on "edit profile" and you can update any fields you want
   
 3. **Task Management :**
-     - Fill form for task (task name , date and time ) and click on “Add” button you will see the task as bellow.
+     - Fill form for task (task name , start_date, end_date, time, priority and status ) and click on “Add” button you will see the task as bellow.
+     - show task as card dispaly all content and tow buttons (edit & delete) and dispaly remaning time need to cpmplete task
      - Use the “Edit” button to edit task info.
      - Use the “Delete” button to remove task info.
 
@@ -75,7 +78,6 @@ the root of the project.
     <summary>Saria Mohammed</summary>
     <ul>
     <li><a href="https://www.github.com/saria2016">GitHub</a></li>
-    <li><a href="https://www.linkedin.com/in/saria-mohi-aldein-mohammed-b17630137/">Linkedin</a></li>
     <li><a href="mailto:saria1904@gmail.com">Gmail</a></li>
     </ul>
 </details>
