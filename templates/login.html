@@ -1,58 +1,79 @@
-<!DOCTYPE html>
-<!-- Coding by CodingNepal | www.codingnepalweb.com-->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Login </title>
-    <link rel="stylesheet" href="../static/css/styleLogin.css">
-    <!-- Fontawesome CDN Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <div class="container">
-      <input type="checkbox" id="flip">
-      <div class="cover">
-        <div class="front">
-          <img src="../static/img/frontImg.jpg" alt="">
-          <div class="text">
-            <span class="text-1">Every new friend is a <br> new adventure</span>
-            <span class="text-2">Let's get connected</span>
-          </div>
-        </div>
-        <div class="back">
-          <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
-          <div class="text">
-            <span class="text-1">Complete miles of journey <br> with one step</span>
-            <span class="text-2">Let's get started</span>
-          </div>
-        </div>
-      </div>
-      <div class="forms">
-        <div class="form-content">
-          <div class="login-form">
-            <div class="title">Login</div>
-            <form action="/login" method="POST">
-              <div class="input-boxes">
-                <div class="input-box">
-                  <i class="fas fa-envelope"></i>
-                  <input type="text" name="username" id="name" placeholder="Enter your username" required>
-                </div>
-                <div class="input-box">
-                  <i class="fas fa-lock"></i>
-                  <input type="password" name="password" id="password" placeholder="Enter your password" required>
-                </div>
-                <div class="text"><a href="#">Forgot password?</a></div>
-                <div class="button input-box">
-                  <input type="submit" value="Submit">
-                </div>
+{% extends "base.html" %}
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a class="navbar-brand navbar-logo" href="{{ url_for('index') }}"> <img src="/static/img/logos.png" alt="logo" ِ/
+    class="logo-1"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+        class="fas fa-bars"></span> </button>
+   
+  </div>
+</nav>
 
-                <div class="text sign-up-text">Don't have an account? <label for="flip"><a href="register.html">Sign now</a></label></div>
+<section class=" section-padding" data-scroll-index='6'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sectioner-header text-center">
+          <h3>Sign In</h3>
+          <span class="line"></span>
+          <p>Welcome to the login screen. Please enter a valid email and password
+            If you do not have an account, please click on the link below to create an account.</p>
+        </div>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="alert">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
+      {% endwith %}
+        <div class="section-content">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <fieldset>
+                <form id="login_form"  action="http://127.0.0.1:5000/login/user" method="POST">
+  
+                <input type="email" id="email" class="form-input w-100" name="email" placeholder="Email" required>
+                  
+                <input type="password" id="password" class="form-input w-100" name="password" placeholder="Password" required>
+                <button class="btn-grad w-100 text-uppercase" type="submit" name="button">Login</button>
+              </form>
+            </fieldset>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="card-info white">
+                <div class="card-item media"> <i class="fa fa-check media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Check your Information</p>
+                  </div>
+                </div>
+                
+                <div class="card-item media"> <i class="fa fa-envelope media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">E-mail</p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-key media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Password</p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-user-plus media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">To Create an Account click <a href="{{ url_for('register') }}">here</a> </p>
+                  </div>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</section>
+{% endblock %}
+

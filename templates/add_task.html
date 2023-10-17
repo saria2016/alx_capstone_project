@@ -2,40 +2,39 @@
 {% block content %}
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
-  <div class="container"> <a class="navbar-brand navbar-logo" href="index.html"> <img src="/static/img/logos.png" alt="logo" 
-    class="logo-1"> </a>
+  <div class="container"> <a class="navbar-brand navbar-logo" href="index.html"> <img src="/static/img/logos.png"
+        alt="logo" class="logo-1"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
         class="fas fa-bars"></span> </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav ml-auto">
         <li class="nav-item"> <a class="nav-link" href="{{ url_for('index') }}">Home</a> </li>
-        <li class="nav-item"> <a class="nav-link" href="{{ url_for('get_task', user_id=task.user_id) }}" >Task</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('get_task', user_id=user_id) }}">Task</a> </li>
         <li class="nav-item"> <a class="nav-link" href="{{ url_for('login') }}">Login</a> </li>
       </ul>
     </div>
   </div>
 </nav>
 
-
 <section class="  section-padding" data-scroll-index='6'>
   <div class="container">
     <div class="row">
       <div class="col-md-12">
         <div class="sectioner-header text-center">
-          <h3>Edit Task</h3>
+          <h3>Add New Task</h3>
           <span class="line"></span>
         </div>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
-          <div class="alert">
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-          </div>
+        <div class="alert">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
         {% endif %}
-      {% endwith %}
+        {% endwith %}
         <div class="section-content">
           <div class="row">
             <div class="col-sm-12 col-md-12 col-lg-4">
@@ -45,10 +44,11 @@
                     <h4 class="text">Task Dashboard</h4>
                   </div>
                 </div>
+
                 <!-- <span class="line"></span> -->
                 <div class="card-item media"> <i class="fa fa-file-invoice media-left media-right-margin"></i>
                   <div class="media-body">
-                    <p class="text-uppercase"><a href="{{ url_for('get_task', user_id=task.user_id)}}" class="white">Task</a>
+                    <p class="text-uppercase"><a href="{{ url_for('get_task', user_id=user_id)}}" class="white">Task</a>
                     </p>
                   </div>
                 </div>
@@ -56,14 +56,14 @@
 
                 <div class="card-item media"> <i class="fa fa-plus media-left media-right-margin"></i>
                   <div class="media-body">
-                    <p class="text-uppercase"><a href="{{ url_for('add_task', user_id=task.user_id) }}" class="white">Add
+                    <p class="text-uppercase"><a href="{{ url_for('add_task', user_id=user_id) }}" class="white">Add
                         Task</a></p>
                   </div>
                 </div>
                 <span class="lines"></span>
                 <div class="card-item media"> <i class="fa fa-user-cog media-left media-right-margin"></i>
                   <div class="media-body">
-                    <p class="text-uppercase"><a href="{{ url_for('edit_user', user_id=task.user_id) }}" class="white">Edit
+                    <p class="text-uppercase"><a href="{{ url_for('edit_user', user_id=user_id) }}" class="white">Edit
                         Profile</a></p>
                   </div>
                 </div>
@@ -79,36 +79,36 @@
             </div>
             <div class="col-sm-12 col-md-12 col-lg-8">
               <fieldset>
-          
-                <form id="card_form"  action="http://127.0.0.1:5000/update_task/{{task.id}}" method="POST"  onsubmit="return validateForm()">
-                  <label for="name">Task Name:</label>
 
-                  <input type="text" id="name" value="{{ task.name }}" class="form-input w-100" name="name" placeholder="Task Name" required>
+                <form id="task_form" action="http://127.0.0.1:5000/create_task/{{user_id}}" method="POST"
+                  onsubmit="return validateForm()"> <label for="name">Task Name:</label>
+
+                  <input type="text" id="name" class="form-input w-100" name="name" placeholder="Task Name">
 
                   <div class="row">
                     <div class="col">
                       <label for="start_date">Start Date:</label>
 
-                      <input type="date" id="start_date" value="{{ task.start_date }}"  class="form-input w-100" name="start_date" required>
+                      <input type="date" id="start_date" class="form-input w-100" name="start_date">
                     </div>
                     <div class="col">
                       <label for="End_date">End Date:</label>
 
-                      <input type="date" id="end_date" value="{{ task.end_date }}" class="form-input w-100" name="end_date"  required>
+                      <input type="date" id="end_date" class="form-input w-100" name="end_date">
                     </div>
                   </div>
                   <label for="stop_time">Stop Time:</label>
-                  <input type="time" id="stop_time" value="{{ task.stop_time }}"  class="form-input w-100" name="stop_time" required>
+                  <input type="time" id="stop_time" class="form-input w-100" name="stop_time">
 
                   <div class="row">
                     <div class="col">
                       <label for="status">Status:</label>
-                  <select id="status" name="status" value="{{ task.status }}" class="form-input w-100" required>
-                      <option value="pending" class="text-warning">Pending</option>
-                      <option value="active" class="text-success">Active</option>
-                      <option value="completed" class="text-primary">Completed</option>
-                      <option value="abort" class="text-danger">Abort</option>
-                  </select>
+                      <select id="status" name="status" class="form-input w-100">
+                        <option value="pending" class="text-warning">Pending</option>
+                        <option value="active" class="text-success">Active</option>
+                        <option value="completed" class="text-primary">Completed</option>
+                        <option value="abort" class="text-danger">Abort</option>
+                      </select>
                     </div>
                     <div class="col">
                       <label for="priority">Priority:</label>
@@ -116,15 +116,15 @@
                       <div class="priority-options">
 
                         <label>
-                          <input type="radio" name="priority" value="low" checked value="{{ task.priority }}" >
+                          <input type="radio" name="priority" value="low" checked>
                           <p class="text-primary">Low</p>
                         </label>
                         <label>
-                          <input type="radio" name="priority" value="medium" class="text-success" value="{{ task.priority }}"  >
+                          <input type="radio" name="priority" value="medium" class="text-success">
                           <p class="text-success">Medium</p>
                         </label>
                         <label>
-                          <input type="radio" name="priority" value="high" class="text-danger" value="{{ task.priority }}" >
+                          <input type="radio" name="priority" value="high" class="text-danger">
                           <p class="text-danger">High</p>
                         </label>
                       </div>
@@ -132,18 +132,19 @@
                   </div>
 
 
-                  
-                  <button class="btn-grad w-100 text-uppercase" type="submit" name="button">Edit Task</button>
+
+                  <button class="btn-grad w-100 text-uppercase" type="submit" name="button">Add Task</button>
                 </form>
-            </fieldset>
+              </fieldset>
             </div>
-         
+
           </div>
         </div>
       </div>
     </div>
   </div>
 </section>
+
 {% block script %}
 <script src="/static/js/taskValidation.js"></script>
 {% endblock %}

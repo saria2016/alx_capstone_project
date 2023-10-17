@@ -1,66 +1,251 @@
-from flask import Flask, abort, flash, render_template, request, jsonify
+from flask import Flask, abort, flash, redirect, render_template, request, jsonify, session, url_for
+from models import storage
+import bcrypt
+import json
+import requests
+from models.user import User
+from models.task import Task
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'os.urandom(32)'  # Replace with your secret key
 
 
+@app.teardown_appcontext
+def teardown_db(exception):
+    """Close the database at the end of the request."""
+    storage.close()
 
 @app.route('/', strict_slashes=False)
-@app.route('/login', strict_slashes=False)
+@app.route('/index', strict_slashes=False)
 def index():
-    """The homepage of the application."""
-
+    """The homepage of the application."""    
+    return render_template('index.html')
+  
+@app.route('/login', strict_slashes=False)
+def login():
+    """The homepage of the application."""    
     return render_template('login.html')
 
 @app.route('/register', strict_slashes=False)
+def reg():
+    """The homepage of the application."""    
+    return render_template('register.html')
+ 
+@app.route('/login/user', methods=['POST'], strict_slashes=False)
+def login_user():
+    """Render the Login page."""
+    url = "http://127.0.0.1:5100/api/v1/users/verify"
+    print("Debug is here")  
+    if "email" not in request.form or "password" not in request.form:
+      abort(400)    
+    email = request.form['email']
+    password = request.form['password']    
+    obj = {
+        'email': email,
+        'password': password
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.post(url, json=obj, headers=headers)
+    print("Hi", response.status_code)
+    if response.status_code == 201:
+        # just remember, we need to render this page base on his credentials
+        flash("Successfully logged in", "success")
+        user_id = response.json().get('id')
+        user_obj = storage.get(User, user_id)     
+        return redirect(url_for('get_task', user_id=user_id))
+    else:
+        flash("Wrong email or password", "danger")
+        return render_template('login.html')
+    
+@app.route('/register', strict_slashes=False)
 def register():
     """Render the Register page."""
-    return render_template('login.html')
+    return render_template('register.html')
 
-@app.route('/add_user', methods=['POST', 'GET'], strict_slashes=False)
-def add_user():
-    """Create a new instance of user."""
+@app.route('/register/new', methods=['POST'], strict_slashes=False)
+def register_new():
+    """Render the Register page."""
+    # data = request.form.json()
+    # name = data.get('name')
+    # email = data.get('email')
+    # password = data.get('password')
+    # confirm_password = data.get('confirm_password')
+    # or
+    name = request.form['name']
+    email = request.form['email']
+    password = request.form['password']
+    confirm_password = request.form['confirm_password']
+    
+    if password != confirm_password:
+        flash("Password mismatch", "danger")
+        return "Password mismatch", (400)
+    obj = {
+        'name': name,
+        'email': email,
+        'password': password
+    }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    url = "http://127.0.0.1:5100/api/v1/users"
+    response = requests.post(url, json=obj, headers=headers)
+    print("HI: ", response.status_code)
+    if response.status_code == 200:
+        flash("Successfully registered", "success")
+        return render_template('login.html')
+    else:
+        flash("Email already exists", "danger")
+        return render_template('login.html')
     
 
-@app.route('/tasks', strict_slashes=False)
-def tasks():
-    """Render the Task page."""
-    return render_template('tasks.html')
+@app.route('/edit_user/<user_id>', strict_slashes=False)
+def edit_user(user_id):
+  """Render the edit page with necessary information to Edit a model."""
+  get_users = storage.get(User, user_id)
+  """Render the edit page with necessary information to Edit a tasks."""
+  return render_template('profile.html', user=get_users)
+ 
 
 
-@app.route('/add_tasks', strict_slashes=False)
-def add_task():
-  """ Render the task page for Adding a new obj insance"""
-  return render_template('tasks.html')
+@app.route('/update_user/<user_id>', methods=['POST'], strict_slashes=False)
+def update_user(user_id):
+
+    name = request.form['name']
+    email = request.form['email']
+    
+    url = f"http://127.0.0.1:5100/api/v1/users/{user_id}"
+    obj = {
+        'name': name,
+        'email': email,
+        }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.put(url, json=obj, headers=headers)
+    if response.status_code == 200:
+        flash(f"User Information Successfully updated", 'success')
+
+        return redirect(url_for('login'))
+    else:
+        flash("Faile to update credentials check your info ", "danger")
+        return render_template('profile.html')
+    pass
+ 
+
+@app.route('/user/<user_id>/tasks', strict_slashes=False)
+def get_task(user_id):
+    """Render the tasks page."""
+    user_task = storage.get(User, user_id).tasks
+    return render_template('tasks.html', tasks=user_task, user_id=user_id)
+
+  
+@app.route('/create_task/<user_id>', methods=['POST'], strict_slashes=False)
+def create_task(user_id):
+    user_task = storage.get(User, user_id).tasks
+
+    """Get the properties of this new obj instance of tasks create this obj via API"""
+    name = request.form['name']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    stop_time = request.form['stop_time']
+    status = request.form['status']
+    priority = request.form['priority']
+    
+    url = f"http://127.0.0.1:5100/api/v1/users/{user_id}/tasks"
+    obj = {
+        'name': name,
+        'start_date': start_date,
+        'end_date': end_date,
+        'stop_time': stop_time,
+        'status': status,
+        'priority': priority
+        }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    print("Hi from front end :", obj)
+    data = requests.post(url, json=obj, headers=headers)
+    # validate status code
+    if data.status_code == 201:
+        flash("tasks created successfully", "success")
+        return redirect(url_for ('get_task', user_id=user_id) )
+    else:
+        flash("Failed to create tasks, It's already Exist you can try to update or us different Name", "danger")
+        return render_template('add_task.html', user_id=user_id)
 
 
-# @app.route('/create_task', methods=['POST'], strict_slashes=False)
-# def create_task():
-#   """Get the properties of this new obj instance of task create this obj via API"""
+@app.route('/add_tasks/<user_id>', strict_slashes=False)
+def add_task(user_id):
+  """ Render the tasks page for Adding a new obj insance"""
+  return render_template('add_task.html',user_id=user_id)
 
 
 
 @app.route('/edit_task/<task_id>', strict_slashes=False)
 def edit_task(task_id):
-  """Render the edit page with necessary information to Edit a task."""
-  return render_template('edit_task.html')
-
-
+  get_tasks = storage.get(Task, task_id)
+  """Render the edit page with necessary information to Edit a tasks."""
+  return render_template('edit_task.html', task=get_tasks)
 
 @app.route('/update_task/<task_id>', methods=['POST'], strict_slashes=False)
 def update_task(task_id):
-  """Edit a task and send this update to the database using API."""
-  return render_template('tasks.html')
+    user_id = storage.get(Task, task_id).user_id
+    
+    name = request.form['name']
+    start_date = request.form['start_date']
+    end_date = request.form['end_date']
+    stop_time = request.form['stop_time']
+    status = request.form['status']
+    priority = request.form['priority']
+    
+    url = f"http://127.0.0.1:5100/api/v1/tasks/{task_id}"
+    obj = {
+        'name': name,
+        'start_date': start_date,
+        'end_date': end_date,
+        'stop_time': stop_time,
+        'status': status,
+        'priority': priority
+        }
+    headers = {
+        'Content-Type': 'application/json'
+    }
+    response = requests.put(url, json=obj, headers=headers)
+    if response.status_code == 200:
+        flash(f"Task Successfully updated1", 'success')
+
+        return redirect(url_for('get_task', user_id=user_id))
+    else:
+        flash("Faile to update credentials", "danger")
+        return render_template('tasks.html')
+    pass
  
 
   
 @app.route('/delete_task/<task_id>', methods=['GET'], strict_slashes=False)
 def delete_task(task_id):
-  """Delete a task."""
-  return render_template('tasks.html')
+  """Delete a tasks."""
+  user_id = storage.get(Task, task_id).user_id
 
+  url = f"http://127.0.0.1:5100/api/v1/tasks/{task_id}"
+  obj = storage.get(Task, task_id)
+  response = requests.delete(url)
+  storage.save()
+  if response.status_code == 200:
+    flash(f"Task '{obj.name }' successfully deleted!", 'success')
+    return redirect(url_for('get_task', user_id=user_id))
+  else:
+    abort(500)
+@app.route("/logout")
+def logout():
+    # Clear session data
+    session.clear()
 
+    # Redirect to the login page
+    return redirect(url_for("login"))
 
 if __name__ == '__main__':
     app.run(debug=True)

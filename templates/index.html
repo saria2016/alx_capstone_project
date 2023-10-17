@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- Navbar -->
+	<nav class="navbar navbar-expand-lg">
+		<div class="container"> <a class="navbar-brand navbar-logo" href="index.html"> <img src="/static/img/logos-bg.png" alt="logo" 
+					class="logo-1"> </a>
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+				aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+					class="fas fa-bars"></span> </button>
+			
+		</div>
+	</nav>
+	<!-- End Navbar -->
+	<!-------Banner Start------->
+	<section class="banner" data-scroll-index='0'>
+		<div class="banner-overlay">
+			<div class="container">
+				<div class="row">
+					<div class="col-md-8 col-sm-12">
+						<div class="banner-text">
+							<h2 class="white">Task Manager Application</h2>
+							<p class="banner-text white">
+								Welcome to the task management website. You can now enjoy the task management
+								experience. You can create and manage your tasks easily through the website. All you
+								have to do is join us by creating an account and logging in.</p>
+							<ul>
+								<li><a href="{{ url_for('login') }}"> <button class="btn-grad w-100 text-uppercase" type="submit"
+											name="button">Login</button>
+									</a></li>
+								<li><a href="{{ url_for('register') }}"> <button class="btn-grad w-100 text-uppercase" type="submit"
+											name="button">Sign Up</button>
+									</a></li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-md-4 col-sm-12"> <img src="/static/img/tasks-removebg-preview.png" height="450px"
+							width="100%" class="wow fadeInUp" /> </div>
+				</div>
+			</div>
+		</div>
+		<span class="svg-wave"> <img class="svg-hero" src="/static/img/applight-wave.svg"> </span>
+	</section>
+
+
+	<footer class="footer-copy">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<p>2023 &copy; Alx SW. Website Designed by <a href="#" target="_blank" rel="dofollow">Alx Student
+						</a></p>
+				</div>
+			</div>
+		</div>
+	</footer>
+    {% endblock %}

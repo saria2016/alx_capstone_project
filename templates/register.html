@@ -1,60 +1,110 @@
-<!DOCTYPE html>
-<!-- Coding by CodingNepal | www.codingnepalweb.com-->
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="UTF-8">
-    <title>Registration Form </title>
-    <link rel="stylesheet" href="../static/css/styleLogin.css">
-    <!-- Fontawesome CDN Link -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  </head>
-  <body>
-    <div class="container">
-      <input type="checkbox" id="flip">
-      <div class="cover">
-        <div class="front">
-          <img src="../static/img/frontImg.jpg" alt="">
-          <div class="text">
-            <span class="text-1">Every new friend is a <br> new adventure</span>
-            <span class="text-2">Let's get connected</span>
-          </div>
+{% extends "base.html" %}
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a class="navbar-brand navbar-logo" href="{{ url_for('index') }}"> <img src="/static/img/logos.png" alt="logo" ِ/
+    class="logo-1"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+        class="fas fa-bars"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('index') }}">Home</a> </li>
+        <!-- <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="1">Task</a> </li> -->
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('login') }}">Login</a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<section class=" section-padding" data-scroll-index='6'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sectioner-header text-center">
+          <h3>Sign Up</h3>
+          <span class="line"></span>
+          <p>Welcome to the registration screen. Please follow the instructions below to create an account.</p>
         </div>
-        <div class="back">
-          <!--<img class="backImg" src="images/backImg.jpg" alt="">-->
-          <div class="text">
-            <span class="text-1">Complete miles of journey <br> with one step</span>
-            <span class="text-2">Let's get started</span>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+          <div class="alert">
+            {% for category, message in messages %}
+              <div class="alert alert-{{ category }}">{{ message }}</div>
+            {% endfor %}
           </div>
-        </div>
-      </div>
-      <div class="forms">
-        <div class="form-content">
-          <div class="signup-form">
-            <div class="title">Signup</div>
-            <form action="/register" method="POST">
-              <div class="input-boxes">
-                <div class="input-box">
-                  <i class="fas fa-user"></i>
-                  <input type="text" name="name"  name="name" placeholder="Enter your name" required>
+        {% endif %}
+      {% endwith %}
+        <div class="section-content">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <fieldset>
+          
+                <form id="register_form" action="http://127.0.0.1:5000/register/new" method="POST" onsubmit="return validateForm()">
+                  <input type="text" id="user_name" class="form-input w-100" name="name" placeholder="Full Name" >
+                  <small class="colorsmall"></small>
+
+                  <input type="email" id="user_email" class="form-input w-100" name="email" placeholder="Email" >
+                  <small class="colorsmall"></small>
+
+                  <div class="row">
+                    <div class="col">
+                      <input type="password" id="user_password" class="form-input w-100" name="password" placeholder="Password" >
+                      <small class="colorsmall"></small>
+
+                    </div>
+                    <div class="col">
+                      <input type="password" id="confirm_password" class="form-input w-100" name="confirm_password" placeholder="Confirm Password" >
+                      <small class="colorsmall"></small>
+                    </div>
+                  </div>
+                  <button class="btn-grad w-100 text-uppercase" type="submit" name="button">Register</button>
+                </form>
+            </fieldset>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="card-info white">
+                <div class="card-item media"> <i class="fa fa-check media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Check your Info</p>
+                    <p class="text">Use Valid Data</p>
+                  </div>
                 </div>
-                <div class="input-box">
-                  <i class="fas fa-envelope"></i>
-                  <input type="text" name="email" id="email" placeholder="Enter your email" required>
+                <div class="card-item media"> <i class="fa fa-user media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">user Name</p>
+                    <p class="text">use Character </p>
+                  </div>
                 </div>
-                <div class="input-box">
-                  <i class="fas fa-lock"></i>
-                  <input type="password" name="password" id="password" placeholder="Enter your password" required>
+                <div class="card-item media"> <i class="fa fa-envelope media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">E-mail</p>
+                    <p class="text-uppercase">Please use a valid email address. This email address can only be used once</a> </p>
+                  </div>
                 </div>
-                <div class="button input-box">
-                  <input type="submit" value="Register">
+                <div class="card-item media"> <i class="fa fa-lock  media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Password</p>
+                    <p class="text-uppercase">Create a password that you can remember </p>
+                  </div>
                 </div>
-                <div class="text sign-up-text">Already have an account? <label for="flip"><a href="login.html">Login now</a></label></div>
+                <div class="card-item media"> <i class="fa fa-key  media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Confirm Password</p>
+                    <p class="text-uppercase">re-type ypur password again </p>
+                  </div>
+                </div>
               </div>
-            </form>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </body>
-</html>
+  </div>
+</section>
+<!-- Add this script at the bottom of your register.html file -->
+{% block script %}
+<script src="/static/js/validateForm.js"></script>
+{% endblock %}
+{% endblock %}

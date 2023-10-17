@@ -1,123 +1,254 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a class="navbar-brand navbar-logo" href="index.html"> <img src="/static/img/logos-bg.png"
+        alt="logo" class="logo-1"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+        class="fas fa-bars"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('index') }}">Home</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('get_task', user_id=user_id) }}">Task</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('login') }}">Login</a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-    <head>
-        <title>Simple Task Management</title>
-        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<section class=" section-padding" data-scroll-index='6'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i&display=swap" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" rel="stylesheet">  
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-        <link href="../static/css/style.css" rel="stylesheet">
-      </head>
-
-    <body>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="alert">
+          {% for category, message in messages %}
+          <div class="alert alert-{{ category }}">{{ message }}</div>
+          {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+        <div class="section-content">
+          <div class="row">
             
-        <!-- <div class="category-name">Basic Cards</div> <br/> -->
-            
-        
-
-
-
-        <div class="card-category-1">
-          <div class="basic-card basic-card-light">
-            <div class="card-content">
-              <div class="card-content-left">
-              </div>
-              <div class="card-content-right">
-                  <div class="container">
-                    <form action="/add_task" method="POST">
-                      <div class="form-field">
-                        <label for="name">Task Name:</label>
-                        <input type="text" id="name" name="name" required>
-                      </div>
-                      <div class="form-field">
-                        <label for="date">Date:</label>
-                        <input type="date" id="date" name="date" required>
-                      </div>
-                      <div class="form-field">
-                        <label for="time">Time:</label>
-                        <input type="time" id="time" name="time" required>
-                      </div>
-                      <!-- <div class="form-field">
-                        <label for="status">Status:</label>
-                        <input type="text" id="status" name="status" required>
-                      </div> -->
-                      <br>
-                      <div class="form-field">
-                        <input type="submit" class="btn-primary" value="Add">
-                      </div>
-                    </form>
+            <div class="col-sm-12 col-md-12 col-lg-4">
+              <div class="card-info white">
+                <div class="card-item media"> <i class="fa fa-home media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <h4 class="text">Task Dashboard</h4>
                   </div>
                 </div>
+                <!-- <span class="line"></span> -->
+                <div class="card-item media"> <i class="fa fa-file-invoice media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase"><a href="{{ url_for('get_task', user_id=user_id)}}" class="white">Task</a>
+                    </p>
+                  </div>
+                </div>
+                <span class="lines"></span>
+
+                <div class="card-item media"> <i class="fa fa-plus media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase"><a href="{{ url_for('add_task', user_id=user_id) }}" class="white">Add
+                        Task</a></p>
+                  </div>
+                </div>
+                <span class="lines"></span>
+                <div class="card-item media"> <i class="fa fa-user-cog media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase"><a href="{{ url_for('edit_user', user_id=user_id) }}" class="white">Edit
+                        Profile</a></p>
+                  </div>
+                </div>
+                <span class="lines"></span>
+                <div class="card-item media"> <i
+                    class=" fa fa-arrow-alt-circle-left  media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase"><a href="{{ url_for('logout') }}" class="white">Logout</a></p>
+                  </div>
+                </div>
+
               </div>
             </div>
-          </div>
-        <br/>
-        
-        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
-        {% if messages %}
-          <div class="alert">
-            {% for category, message in messages %}
-              <div class="alert alert-{{ category }}">{{ message }}</div>
-            {% endfor %}
-          </div>
-        {% endif %}
-      {% endwith %} -->
+            <div class="col-sm-12 col-md-12 col-lg-8">
+              <div class="row">
+                {% for task in tasks %}
 
-      <br>
-        <!-- Image Cards -->
-        <div class="card-category-2">
-          <ul>
-            <!-- {% for task in tasks %} -->
-            <li>
-              <div class="img-card iCard-style2">
-                <div class="card-content">
-                  <div class="card-image">
-                    <img src="../static/assets/img/to4.jpeg">
-                  </div>
-                  <div class="Displayflex">
-                    <span class="card-title">{{task.get("task_name")}}</span>
-                    <input type="checkbox" name="status" class="size">
-                  </div>
-                  <div class="card-text">
-                    <p><b>Date :</b>{{task.get("task_date")}}</p>
-                    <p><b>Time :</b>{{task.get("task_time")}}</p>
-                    <!-- <p> Status: {{task.get("task_status")}}</p> -->
+                <div class="col-sm-12 col-md-12 col-lg-6 marging">
+                  <div class="card  {% if task.status == 'complete' %}complete{% endif %}">
+                    <div class="card-item media center">
+                      <div class="media-body ">
+                        <input type="checkbox" name="status" class="size" id="checkComplete">
+
+                        <!-- <div class="clock">
+                          <div class="hand hour-hand"></div>
+                          <div class="hand minute-hand"></div>
+                          <div class="hand second-hand"></div>
+                          <div class="time-output" id="timeNeeded"></div>
+                          <div class="time-remaining"></div>
+                        </div> -->
+                        <p class="text-uppercase"><i
+                            class="fa fa-file-invoice media-left media-right-margin color"></i>{{task.name}}
+                            
+                        </p>
+                        
+                        <br>
+                        <p class="remender">Remaining Time: <span id="countdownTimer_{{ task.id }}"></span></p>
+
+
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-6">
+                        <div class="card-item media"> <i
+                            class="fa fa-calendar-check media-left media-right-margin color"></i>
+                          <div class="media-body">
+                            <p ><strong>Start Date </strong>{{task.start_date}} </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-6">
+                        <div class="card-item media"> <i
+                            class="fa fa-calendar-check media-left media-right-margin color"></i>
+                          <div class="media-body">
+                            <p><strong>End Date </strong>{{task.end_date}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-lg-3">
+
+                        <div class="card-item media"> <i class="fa fa-clock media-left media-right-margin color"></i>
+                          <div class="media-body">
+                            <p ><strong>Time</strong> {{task.stop_time}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="card-item media"> <i
+                            class="fa fa-arrow-circle-up media-left media-right-margin color"></i>
+                          <div class="media-body">
+                            <p ><strong> Proiarty</strong> {{task.priority}}</p>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-lg-4">
+                        <div class="card-item media"> <i
+                            class=" fa fa-exclamation-circle  media-left media-right-margin color"></i>
+                          <div class="media-body">
+                            <p><strong>Status</strong> {{task.status}}</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row justify-content-center" id="btnDiv">
+                      <div class="col">
+                        <div class="card-item ">
+                          <a href="{{ url_for('edit_task', task_id=task.id) }}">
+                            <button class="btn-edit w-100" type="submit" name="button">
+                              <p><i class="fa fa-edit">&nbsp;Edit</i></p>
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                      <div class="col">
+                        <div class="card-item ">
+                          <a href="{{ url_for('delete_task', task_id=task.id) }}">
+                            <button class="btn-delete w-100" type="submit" name="button">
+                              <p><i class="fa fa-trash"> Delete</i></p>
+                            </button>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="card-link Displayflex">
-                  <a href="{{ url_for('edit_task', task_id=task.id) }}" title="Edit Task"
-                    class="btn-success edit-button"><span>Edit &nbsp;<i class="fa fa-edit tex-white"></i></span></a>
-                  <a href="{{ url_for('delete_task', task_id=task.id) }}" title="Delete Task"
-                    class="btn-danger delete-button"><span>Delete &nbsp; <i class="fa fa-trash text-white"></i></span></a>
-                </div>
+                {% endfor %}
+
               </div>
-            </li>
-            <!-- {% endfor %} -->
-          </ul>
+
+            </div>
+
+          </div>
+
         </div>
-        <br/>
-        
-      
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-          $(document).ready(function() {
-            $('.size').change(function() {
-              var checkbox = $(this);
-              var buttonDiv = checkbox.closest('.img-card').find('.card-link');
-              
-              if (checkbox.is(':checked')) {
-                buttonDiv.hide();
-              } else {
-                buttonDiv.show();
-              }
-            });
-          });
-        </script>
-      </body>
-</html>
+      </div>
+    </div>
+  </div>
+  </div>
+</section>
+<script>
+  function updateCountdownTimer(taskId, endDate, stopTime) {
+    // Get the current time
+    var now = new Date().getTime();
+
+    // Get the task's end date and time
+    var taskEndDate = new Date(endDate + " " + stopTime).getTime();
+
+    // Calculate the time remaining in milliseconds
+    var timeRemaining = taskEndDate - now;
+
+    // Check if the task has already ended
+    if (timeRemaining <= 0) {
+      document.getElementById("countdownTimer_" + taskId).innerHTML = "Task completed";
+      document.getElementById("taskCard_" + taskId).style.backgroundColor = "black"; // Change background color to black
+      return;
+    }
+
+    // Calculate the remaining hours, minutes, and seconds
+    var hours = Math.floor((timeRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((timeRemaining % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
+
+    // Format the time as a countdown clock
+    var formattedTime = hours.toString().padStart(2, "0") + ":" +
+                        minutes.toString().padStart(2, "0") + ":" +
+                        seconds.toString().padStart(2, "0");
+
+    // Update the countdown timer element for the specific task
+    var countdownTimerElement = document.getElementById("countdownTimer_" + taskId);
+    countdownTimerElement.innerHTML = formattedTime;
+
+    // Check if the timer has reached 0:0:0
+    if (hours == 0 && minutes == 0 && seconds == 0) {
+      countdownTimerElement.innerHTML = "Time Pass";
+      document.getElementById("taskCard_" + taskId).style.backgroundColor = "black"; // Change background color to black
+      return;
+    }
+
+    // Call the function again after 1 second
+    setTimeout(function() {
+      updateCountdownTimer(taskId, endDate, stopTime);
+    }, 1000);
+  }
+
+  // Call the updateCountdownTimer function for each task
+  <!-- {% for task in tasks %}
+    updateCountdownTimer("{{ task.id }}", "{{ task.end_date }}", "{{ task.stop_time }}");
+  {% endfor %} -->
+</script>
+
+<!-- Add the following script at the end of your HTML file -->
+<script>
+  // Get all the checkboxes with the name "status"
+  const checkbox = document.getElementById('checkComplete');
+  const btnDiv = document.getElementById('btnDiv');
+  
+  checkbox.addEventListener('change', function() {
+      if (checkbox.checked) {
+          // btnDiv.style.display = 'none'; // Hide the btnDiv
+          btnDiv.classList.add('dis');
+          checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '#9e979797';
+      } else {
+          // btnDiv.style.display = 'block'; // Show the btnDiv
+          btnDiv.classList.remove('dis');
+          checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '';
+      }
+  });
+</script>
+{% endblock %}

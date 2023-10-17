@@ -1,46 +1,35 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends "base.html" %}
+{% block content %}
+<!-- Navbar -->
+<nav class="navbar navbar-expand-lg">
+  <div class="container"> <a class="navbar-brand navbar-logo" href="{{ url_for('index') }}"> <img src="/static/img/logos.png" alt="logo"
+    class="logo-1"> </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
+        class="fas fa-bars"></span> </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('index') }}">Home</a> </li>
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('get_task', user_id=user.id) }}" >Task</a> </li>
 
-    <head>
-        <title>Simple Task Management</title>
-        
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <!-- <li class="nav-item"> <a class="nav-link" href="#" data-scroll-nav="1">Task</a> </li> -->
+        <li class="nav-item"> <a class="nav-link" href="{{ url_for('login') }}">Login</a> </li>
+      </ul>
+    </div>
+  </div>
+</nav>
 
-        <link href="https://fonts.googleapis.com/css?family=Roboto:300&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i&display=swap" rel="stylesheet">
-        <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.css" rel="stylesheet">  
-        <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+<section class=" section-padding" data-scroll-index='6'>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="sectioner-header text-center">
+          <h3>P rofile</h3>
+          <span class="line"></span>
+          <p>Welcome to the registration screen. Please follow the instructions below to create an account.</p>
+        </div>
 
-        <link href="../static/css/style.css" rel="stylesheet">
-      </head>
-
-    <body>
-            
-        <!-- <div class="category-name">Basic Cards</div> <br/> -->
-            
-        
-
-
-
-        <div class="card-category-1">
-          <div class="basic-card basic-card-light">
-            <div class="card-content">
-              <div class="card-content-left">
-                <div>
-                  <input type="submit" class="btn-light" value="Logout">
-                  <input type="submit" class="btn-light" value="Tasks">
-
-                </div>
-
-              </div>
-              
-              </div>
-            </div>
-          </div>
-        <br/>
-        
-        <!-- {% with messages = get_flashed_messages(with_categories=true) %}
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
           <div class="alert">
             {% for category, message in messages %}
@@ -48,61 +37,68 @@
             {% endfor %}
           </div>
         {% endif %}
-      {% endwith %} -->
-
-      <br>
-        <!-- Image Cards -->
-        <div class="card-category-2">
-          <ul>
-            <!-- {% for task in tasks %} -->
-            <li>
-              <div class="img-card iCard-style2">
-                <div class="container">
-                    <form action="/add_task" method="POST">
-                      <div class="form-field">
-                        <label for="name">Name:</label>
-                        <input type="text" id="name" name="name" required>
-                      </div>
-                      <div class="form-field">
-                        <label for="date">Email:</label>
-                        <input type="email" id="email" name="email" disabled required>
-                      </div>
-                      <div class="form-field">
-                        <label for="time">Password:</label>
-                        <input type="password" id="password" name="password" required>
-                      </div>
-                      <!-- <div class="form-field">
-                        <label for="status">Status:</label>
-                        <input type="text" id="status" name="status" required>
-                      </div> -->
-                      <br>
-                      <div class="form-field">
-                        <input type="submit" class="btn-primary" value="Update">
-                      </div>
-                    </form>
+      {% endwith %}
+        <div class="section-content">
+          <div class="row">
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <fieldset>
+          
+                <form id="register_form"  action="http://127.0.0.1:5000/update_user/{{user.id}}" method="POST" onsubmit="return validateForm()">
+                  <input type="text" id="user_name" value="{{ user.name }}" class="form-input w-100" name="name" placeholder="Full Name" >
+                  <input type="email" id="user_email" value="{{ user.email }}" class="form-input w-100" name="email" placeholder="Email" >
+                  <div class="row">
+                    <div class="col">
+                      <input type="password" id="user_password" class="form-input w-100" name="password" placeholder="Password" >
+                    </div>
+                    <div class="col">
+                      <input type="password" id="confirm_password" class="form-input w-100" name="confirm_password" placeholder="Confirm Password" >
+                    </div>
                   </div>
+                  <button class="btn-grad w-100 text-uppercase" type="submit" name="button">Update </button>
+                </form>
+            </fieldset>
+            </div>
+            <div class="col-sm-12 col-md-12 col-lg-6">
+              <div class="card-info white">
+                <div class="card-item media"> <i class="fa fa-check media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Check your Info</p>
+                    <p class="text">Use Valid Data</p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-user media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">user Name</p>
+                    <p class="text">use Character </p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-envelope media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">E-mail</p>
+                    <p class="text-uppercase">Please use a valid email address. This email address can only be used once</a> </p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-lock  media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Password</p>
+                    <p class="text-uppercase">Create a password that you can remember </p>
+                  </div>
+                </div>
+                <div class="card-item media"> <i class="fa fa-key  media-left media-right-margin"></i>
+                  <div class="media-body">
+                    <p class="text-uppercase">Confirm Password</p>
+                    <p class="text-uppercase">re-type ypur password again </p>
+                  </div>
+                </div>
               </div>
-            </li>
-            <!-- {% endfor %} -->
-          </ul>
+            </div>
+          </div>
         </div>
-        <br/>
-        
-      
-        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-        <script>
-          $(document).ready(function() {
-            $('.size').change(function() {
-              var checkbox = $(this);
-              var buttonDiv = checkbox.closest('.img-card').find('.card-link');
-              
-              if (checkbox.is(':checked')) {
-                buttonDiv.hide();
-              } else {
-                buttonDiv.show();
-              }
-            });
-          });
-        </script>
-      </body>
-</html>
+      </div>
+    </div>
+  </div>
+</section>
+{% block script %}
+<script src="/static/js/validateForm.js"></script>
+{% endblock %}
+{% endblock %}
