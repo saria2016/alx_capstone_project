@@ -28,10 +28,6 @@ Relational Database
 * Model system with base model handling identification
 * Many to many relationships for users and rewards
 
-Server / Deployment
-* Nginx / Gunicorn
-* Ubuntu 20.04
-
 ## Features
 
 The Task Manager APP includes the following key features:
