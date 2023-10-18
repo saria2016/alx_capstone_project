@@ -42,15 +42,22 @@ The Task Manager APP includes the following key features:
 
 ## Getting Started
 
-Clone this git repository. If you are a GNU/Linux user, you could copy and paste the
+- Clone this git repository. If you are a GNU/Linux user, you could copy and paste the
 following command to clone and change the working directory into the root of this project:
 
 ```sh
 git clone https://github.com/saria2016/alx_capstone_project.git && cd alx_capstone_project
 ```
 
-Otherwise, clone the repository as you'd like and change the working directory into
+- Otherwise, clone the repository as you'd like and change the working directory into
 the root of the project.
+
+## Run in your local
+- use this command to enter mysql srver (mysql -u root -p ) and enter your password
+- use command (source db_setup.sql) to create database name it (task_db)
+- use command (python app.py) to run application and create table in to databes
+- use command (python -m api.v1.app) to run API
+* after all steps you ready to run ( use link http://127.0.0.1:5000) in you browser
 
 
 ## Usage
