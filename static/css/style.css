@@ -15,6 +15,7 @@
 	--text-primary: #007bff;
 	--text-danger: #dc3545;
 	--black: #000000;
+	--danger: red;
 	--center: center;
 }
 
@@ -289,9 +290,11 @@ select {
 }
 
 .color {
-	color: #1498a7;
+	color: var(--main-color);
 }
-
+.error-message{
+	color: var(--danger);
+}
 .btn-grad {
 	padding: .7rem 2rem;
 	display: inline-block;
@@ -394,7 +397,7 @@ select {
 @media all and (max-width:991px) {
 	.navbar .navbar-collapse {
 		overflow: auto;
-		background: rgb(213, 198, 221);
+		background: var(--main-color);
 		color: #fff !important;
 		text-align: center;
 		padding: 10px 0;
