@@ -2,8 +2,8 @@
 {% block content %}
 <!-- Navbar -->
 <nav class="navbar navbar-expand-lg">
-  <div class="container"> <a class="navbar-brand navbar-logo" href="index.html"> <img src="/static/img/logos-bg.png"
-        alt="logo" class="logo-1"> </a>
+  <div class="container"> <a class="navbar-brand navbar-logo" href="{{ url_for('index') }}"> <img
+        src="/static/img/logos.png" alt="logo" alt="logo" class="logo-1"> </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span
         class="fas fa-bars"></span> </button>
@@ -34,7 +34,7 @@
         {% endwith %}
         <div class="section-content">
           <div class="row">
-            
+
             <div class="col-sm-12 col-md-12 col-lg-4">
               <div class="card-info white">
                 <div class="card-item media"> <i class="fa fa-home media-left media-right-margin"></i>
@@ -83,19 +83,10 @@
                     <div class="card-item media center">
                       <div class="media-body ">
                         <input type="checkbox" name="status" class="size" id="checkComplete">
-
-                        <!-- <div class="clock">
-                          <div class="hand hour-hand"></div>
-                          <div class="hand minute-hand"></div>
-                          <div class="hand second-hand"></div>
-                          <div class="time-output" id="timeNeeded"></div>
-                          <div class="time-remaining"></div>
-                        </div> -->
                         <p class="text-uppercase"><i
                             class="fa fa-file-invoice media-left media-right-margin color"></i>{{task.name}}
-                            
                         </p>
-                        
+
                         <br>
                         <p class="remender">Remaining Time: <span id="countdownTimer_{{ task.id }}"></span></p>
 
@@ -107,7 +98,7 @@
                         <div class="card-item media"> <i
                             class="fa fa-calendar-check media-left media-right-margin color"></i>
                           <div class="media-body">
-                            <p ><strong>Start Date </strong>{{task.start_date}} </p>
+                            <p><strong>Start Date </strong>{{task.start_date}} </p>
                           </div>
                         </div>
                       </div>
@@ -125,7 +116,7 @@
 
                         <div class="card-item media"> <i class="fa fa-clock media-left media-right-margin color"></i>
                           <div class="media-body">
-                            <p ><strong>Time</strong> {{task.stop_time}}</p>
+                            <p><strong>Time</strong> {{task.stop_time}}</p>
                           </div>
                         </div>
                       </div>
@@ -133,7 +124,7 @@
                         <div class="card-item media"> <i
                             class="fa fa-arrow-circle-up media-left media-right-margin color"></i>
                           <div class="media-body">
-                            <p ><strong> Proiarty</strong> {{task.priority}}</p>
+                            <p><strong> Proiarty</strong> {{task.priority}}</p>
                           </div>
                         </div>
                       </div>
@@ -207,8 +198,8 @@
 
     // Format the time as a countdown clock
     var formattedTime = hours.toString().padStart(2, "0") + ":" +
-                        minutes.toString().padStart(2, "0") + ":" +
-                        seconds.toString().padStart(2, "0");
+      minutes.toString().padStart(2, "0") + ":" +
+      seconds.toString().padStart(2, "0");
 
     // Update the countdown timer element for the specific task
     var countdownTimerElement = document.getElementById("countdownTimer_" + taskId);
@@ -222,7 +213,7 @@
     }
 
     // Call the function again after 1 second
-    setTimeout(function() {
+    setTimeout(function () {
       updateCountdownTimer(taskId, endDate, stopTime);
     }, 1000);
   }
@@ -238,17 +229,17 @@
   // Get all the checkboxes with the name "status"
   const checkbox = document.getElementById('checkComplete');
   const btnDiv = document.getElementById('btnDiv');
-  
-  checkbox.addEventListener('change', function() {
-      if (checkbox.checked) {
-          // btnDiv.style.display = 'none'; // Hide the btnDiv
-          btnDiv.classList.add('dis');
-          checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '#9e979797';
-      } else {
-          // btnDiv.style.display = 'block'; // Show the btnDiv
-          btnDiv.classList.remove('dis');
-          checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '';
-      }
+
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      // btnDiv.style.display = 'none'; // Hide the btnDiv
+      btnDiv.classList.add('dis');
+      checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '#9e979797';
+    } else {
+      // btnDiv.style.display = 'block'; // Show the btnDiv
+      btnDiv.classList.remove('dis');
+      checkbox.parentNode.parentNode.parentNode.style.backgroundColor = '';
+    }
   });
 </script>
 {% endblock %}

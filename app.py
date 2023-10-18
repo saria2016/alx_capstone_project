@@ -220,7 +220,7 @@ def update_task(task_id):
         return redirect(url_for('get_task', user_id=user_id))
     else:
         flash("Faile to update credentials", "danger")
-        return render_template('tasks.html')
+        return redirect(url_for('get_task', user_id=user_id))
     pass
  
 
