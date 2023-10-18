@@ -35,11 +35,6 @@ The Task Manager APP includes the following key features:
 1. **The ability to schedule tasks and activities:** Users can create tasks easily
 2. **The ability to easily modify and delete tasks:** Users can view the details and information of the tasks created with the ability to modify and delete as needed.
 
-# Installation
-## Dependencies
-- This application is written in Python and requires Python 3.11.4 or 3.11.6 to run correctly.
-- Use Requirement.txt to install all dependancy library by add this command :( pip install -r requirements.txt)
-
 ## Getting Started
 
 - Clone this git repository. If you are a GNU/Linux user, you could copy and paste the
@@ -51,6 +46,15 @@ git clone https://github.com/saria2016/alx_capstone_project.git && cd alx_capsto
 
 - Otherwise, clone the repository as you'd like and change the working directory into
 the root of the project.
+
+
+# Installation
+## Dependencies
+- This application is written in Python and requires Python 3.11.4 or 3.11.6 to run correctly.
+- install mySQL server (https://dev.mysql.com/downloads/mysql/)
+- active project env (venv\Scripts\activate)
+- Use Requirement.txt to install all dependancy library by add this command :( pip install -r requirements.txt)
+
 
 ## Run in your local
 - use this command to enter mysql srver (mysql -u root -p ) and enter your password
